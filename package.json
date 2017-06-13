@@ -1,0 +1,33 @@
+{
+  "name": "cytoscape-canvas",
+  "version": "1.0.0",
+  "description": "A Cytoscape extension to enable drawing over and under a graph",
+  "main": "cytoscape-canvas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/classcraft/cytoscape-canvas.git"
+  },
+  "keywords": [
+    "cytoscape",
+    "cytoscape.js",
+    "cytoscapejs",
+    "extension"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/classcraft/cytoscape-canvas/issues"
+  },
+  "homepage": "https://github.com/classcraft/cytoscape-canvas",
+  "devDependencies": {
+    "gulp": "^3.8.8",
+    "gulp-jshint": "^1.8.5",
+    "gulp-prompt": "^0.1.1",
+    "gulp-replace": "^0.4.0",
+    "gulp-shell": "^0.2.9",
+    "jshint-stylish": "^1.0.0",
+    "run-sequence": "^1.0.0"
+  }
+}
