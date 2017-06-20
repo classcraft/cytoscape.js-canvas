@@ -4,32 +4,104 @@ cytoscape-canvas
 
 ## Description
 
-A Cytoscape extension to enable drawing over and under a graph
+An extension to create a canvas over or under a Cytoscape graph.
+Useful for customizing nodes/edges, drawing backgrounds, etc.
 
 
 ## Dependencies
 
- * Cytoscape.js >=x.y.z
- * <List your dependencies here please>
+ * Cytoscape.js >=3.0.0
 
-
-## API
-
-Please briefly describe your API here:
+## Example
 
 ```js
-cy.canvas({
-  foo: 'bar', // some option that does this
-  baz: 'bat' // some options that does that
-  // ... and so on
+var cytoscape = require('cytoscape');
+var cyCanvas = require('cytoscape-canvas');
+
+cyCanvas(cytoscape); // Register extension
+
+var cy = cytoscape({/* ... */});
+
+var canvas = cy.cyCanvas();
+
+cy.on("render cyCanvas.resize", (evt) => {
+	canvas.resetTransform();
+	canvas.clear();
+
+	// Draw fixed elements
+	canvas.ctx.fillStyle = "green";
+	canvas.ctx.fillRect(pos.x, pos.y, 100, 100);
+
+	canvas.setTransform();
+
+	// Draw model elements
+	_.each(cy.nodes(), (node) => {
+		const pos = node.position();
+		canvasTop.ctx.fillStyle = "green";
+		canvasTop.ctx.fillRect(pos.x, pos.y, 100, 100);
+	});
+});
+
+```
+
+## Usage instructions
+
+Download the library:
+
+ * via npm: `npm install cytoscape-canvas`,
+ * via bower: `bower install cytoscape-canvas `, or
+ * via direct download in the repository (probably from a tag).
+
+`require()` the library as appropriate for your project:
+
+CommonJS:
+
+```js
+var cytoscape = require('cytoscape');
+var cyCanvas = require('cytoscape-canvas');
+
+cyCanvas(cytoscape); // Register extension
+```
+
+AMD:
+
+```js
+require(['cytoscape', 'cytoscape-canvas'], function(cytoscape, cyCanvas) {
+  cyCanvas(cytoscape); // Register extension
 });
 ```
 
+Plain HTML/JS has the extension registered for you automatically, because no `require()` is needed.
 
-## Publishing instructions
+### Initialisation
 
-This project is set up to automatically be published to npm and bower.  To publish:
+```js
+var cy = cytoscape({/* ... */});
 
-1. Set the version number environment variable: `export VERSION=1.2.3`
-1. Publish: `gulp`
-1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-canvas https://github.com/classcraft/cytoscape-canvas.git`
+var canvas = cy.cyCanvas({
+  zIndex: 1,
+  pixelRatio: "auto",
+});
+```
+
+### API
+
+#### `canvas.ctx`
+
+Get the canvas context. You can then use any canvas functions (e.g. `canvas.ctx.fillRect(...)`)
+
+#### `canvas.setTransform()`
+
+Set the context transform to **match Cystoscape's zoom & pan**. Further drawing will be on **model position.**
+
+#### `canvas.resetTransform()`
+
+Reset the context transform. Further drawing will be on **rendered position.**
+
+#### `canvas.clear()`
+
+Clear the entire canvas.
+
+### Events
+
+`cyCanvas.resize`: When the extension's canvas is resized
