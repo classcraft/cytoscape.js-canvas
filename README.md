@@ -90,11 +90,11 @@ Get the canvas context. You can then use any canvas functions (e.g. `canvas.ctx.
 
 #### `canvas.setTransform()`
 
-Set the context transform to **match Cystoscape's zoom & pan**. Further drawing will be on **model position.**
+Set the context transform to **match Cystoscape's zoom & pan**. Further drawing will be on [model position](http://js.cytoscape.org/#notation/position).
 
 #### `canvas.resetTransform()`
 
-Reset the context transform. Further drawing will be on **rendered position.**
+Reset the context transform. Further drawing will be on [rendered position](http://js.cytoscape.org/#notation/position).
 
 #### `canvas.clear()`
 
