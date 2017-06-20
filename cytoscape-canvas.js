@@ -53,9 +53,12 @@
 				ctx: ctx,
 				// Clear the canvas
 				clear: function() {
-					const width = cy.width();
-					const height = cy.height();
+					var width = cy.width();
+					var height = cy.height();
+					ctx.save();
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
 					ctx.clearRect(0, 0, width * options.pixelRatio, height * options.pixelRatio);
+					ctx.restore();
 				},
 				// Reset the context transform to an identity matrix
 				resetTransform: function() {
@@ -63,8 +66,8 @@
 				},
 				// Set the context transform to match Cystoscape's zoom & pan
 				setTransform: function() {
-					const pan = cy.pan();
-					const zoom = cy.zoom();
+					var pan = cy.pan();
+					var zoom = cy.zoom();
 					ctx.setTransform(1, 0, 0, 1, 0, 0);
 					ctx.translate(pan.x * options.pixelRatio, pan.y * options.pixelRatio);
 					ctx.scale(zoom * options.pixelRatio, zoom * options.pixelRatio);
