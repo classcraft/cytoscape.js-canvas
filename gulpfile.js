@@ -44,7 +44,7 @@ gulp.task('version', function( next ){
     console.log('Using version number `%s` for building', version);
     next();
   }
-  
+
 });
 
 gulp.task('pkgver', ['version'], function(){
@@ -60,7 +60,7 @@ gulp.task('pkgver', ['version'], function(){
 
 gulp.task('push', shell.task([
   'git add -A',
-  'git commit -m "pushing changes for v$VERSION release"',
+  'git commit -m "Pushing changes for v$VERSION release"',
   'git push'
 ]));
 
