@@ -19,10 +19,14 @@
 
 			var defaults = {
 				zIndex: 1,
-				pixelRatio: window.devicePixelRatio || 1,
+				pixelRatio: "auto",
 			};
 
 			var options = Object.assign({}, defaults, args);
+
+			if (options.pixelRatio === "auto") {
+				options.pixelRatio = window.devicePixelRatio || 1;
+			}
 
 			function _resize() {
 				var width = $container.width();
