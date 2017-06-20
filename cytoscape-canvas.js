@@ -81,7 +81,7 @@
 	if (typeof module !== 'undefined' && module.exports) { // expose as a commonjs module
 		module.exports = function(cytoscape) {
 			register(cytoscape, require('lodash.debounce'));
-		}
+		};
 	}
 
 	if (typeof define !== 'undefined' && define.amd) { // expose as an amd/requirejs module
