@@ -24,21 +24,19 @@ var cy = cytoscape({/* ... */});
 
 var canvas = cy.cyCanvas();
 
-cy.on("render cyCanvas.resize", (evt) => {
+cy.on("render cyCanvas.resize", function(evt) {
 	canvas.resetTransform();
 	canvas.clear();
 
 	// Draw fixed elements
-	canvas.ctx.fillStyle = "green";
-	canvas.ctx.fillRect(pos.x, pos.y, 100, 100);
+	canvas.ctx.fillRect(0, 0, 100, 100); // Top left corner
 
 	canvas.setTransform();
 
 	// Draw model elements
-	_.each(cy.nodes(), (node) => {
-		const pos = node.position();
-		canvasTop.ctx.fillStyle = "green";
-		canvasTop.ctx.fillRect(pos.x, pos.y, 100, 100);
+	cy.nodes().forEach(function(node) {
+		var pos = node.position();
+		canvas.ctx.fillRect(pos.x, pos.y, 100, 100); // At node position
 	});
 });
 
