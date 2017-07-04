@@ -1,6 +1,6 @@
 ;(function() { 'use strict';
 	// registers the extension on a cytoscape lib ref
-	var register = function(cytoscape, debounce) {
+	var register = function(cytoscape) {
 		if (!cytoscape) {
 			return;
 		}
@@ -28,7 +28,7 @@
 				options.pixelRatio = window.devicePixelRatio || 1;
 			}
 
-			function _resize() {
+			function resize() {
 				var width = $container.width();
 				var height = $container.height();
 
@@ -44,14 +44,12 @@
 				cy.trigger("cyCanvas.resize");
 			}
 
-			var resize = debounce(_resize, 100);
-
 			cy.on('resize', function() {
 				resize();
 			});
 
 			canvas.setAttribute('style', 'position:absolute; top:0; left:0; z-index:' + options.zIndex + ';');
-			_resize();
+			resize();
 
 			return {
 				ctx: ctx,
@@ -84,7 +82,7 @@
 
 	if (typeof module !== 'undefined' && module.exports) { // expose as a commonjs module
 		module.exports = function(cytoscape) {
-			register(cytoscape, require('lodash.debounce'));
+			register(cytoscape);
 		};
 	}
 
@@ -95,7 +93,7 @@
 	}
 
 	if (typeof cytoscape !== 'undefined') { // expose to global cytoscape (i.e. window.cytoscape)
-		register(cytoscape, _.debounce.bind(_));
+		register(cytoscape);
 	}
 
 })();
