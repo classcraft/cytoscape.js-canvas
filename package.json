@@ -2,7 +2,7 @@
   "name": "cytoscape-canvas",
   "version": "1.0.2",
   "description": "A Cytoscape extension to enable drawing over and under a graph",
-  "main": "cytoscape-canvas.js",
+  "main": "./dist/cytoscape-canvas.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
