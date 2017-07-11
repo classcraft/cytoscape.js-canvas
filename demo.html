@@ -8,12 +8,12 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
 		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-		<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+		<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 
-		<!-- for testing with local version of cytoscape.js -->
-		<!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
+		<script src="https://unpkg.com/cytoscape-canvas/dist/cytoscape-canvas.js"></script>
 
-		<script src="cytoscape-canvas.js"></script>
+		<!-- for testing with local version-->
+		<!-- <script src="src/cytoscape-canvas.js"></script> -->
 
 		<style>
 			body {
@@ -38,58 +38,95 @@
 
 		<script>
 			$(function(){
+				var background = new Image();
+				background.onload = function() {
+					var cy = window.cy = cytoscape({
+						container: document.getElementById('cy'),
 
-				var cy = window.cy = cytoscape({
-					container: document.getElementById('cy'),
-
-					ready: function(){
-					},
-
-					style: [
-						{
-							selector: 'node',
-							css: {
-								'content': 'data(name)'
-							}
+						ready: function(){
 						},
 
-						{
-							selector: 'edge',
-							css: {
-								'target-arrow-shape': 'triangle'
+						style: [
+							{
+								selector: 'node',
+								css: {
+									'content': 'data(name)'
+								}
+							},
+
+							{
+								selector: 'edge',
+								css: {
+									'target-arrow-shape': 'triangle'
+								}
 							}
-						}
-					],
-
-					elements: {
-						nodes: [
-							{ data: { id: 'j', name: 'Jerry' } },
-							{ data: { id: 'e', name: 'Elaine' } },
-							{ data: { id: 'k', name: 'Kramer' } },
-							{ data: { id: 'g', name: 'George' } }
 						],
-						edges: [
-							{ data: { source: 'j', target: 'e' } },
-							{ data: { source: 'j', target: 'k' } },
-							{ data: { source: 'j', target: 'g' } },
-							{ data: { source: 'e', target: 'j' } },
-							{ data: { source: 'e', target: 'k' } },
-							{ data: { source: 'k', target: 'j' } },
-							{ data: { source: 'k', target: 'e' } },
-							{ data: { source: 'k', target: 'g' } },
-							{ data: { source: 'g', target: 'j' } }
-						]
-					},
-				});
 
-				// call your extension here ...
+						elements: {
+							nodes: [
+								{ data: { id: 'j', name: 'Jerry' } },
+								{ data: { id: 'e', name: 'Elaine' } },
+								{ data: { id: 'k', name: 'Kramer' } },
+								{ data: { id: 'g', name: 'George' } }
+							],
+							edges: [
+								{ data: { source: 'j', target: 'e' } },
+								{ data: { source: 'j', target: 'k' } },
+								{ data: { source: 'j', target: 'g' } },
+								{ data: { source: 'e', target: 'j' } },
+								{ data: { source: 'e', target: 'k' } },
+								{ data: { source: 'k', target: 'j' } },
+								{ data: { source: 'k', target: 'e' } },
+								{ data: { source: 'k', target: 'g' } },
+								{ data: { source: 'g', target: 'j' } }
+							]
+						},
+					});
 
-				// e.g. on the core
-				// cy.canvas();
+					var canvas = cy.cyCanvas({
+						zIndex: -1,
+					});
 
-				// e.g. on elements
-				// cy.elements().canvas();
+					cy.on("render cyCanvas.resize", (evt) => {
+						var ctx = canvas.ctx;
 
+						canvas.resetTransform();
+						canvas.clear();
+						canvas.setTransform();
+
+						ctx.save();
+						// Draw a background
+						ctx.drawImage(background, 0, 0)
+
+						// Draw text that follows the model
+						ctx.font="24px Helvetica";
+						ctx.fillStyle = "black";
+						ctx.fillText("This text follows the model", 200, 300);
+
+						// Draw shadows under nodes
+						ctx.shadowColor = "black";
+						ctx.shadowBlur = 25 * cy.zoom();
+						ctx.fillStyle = "white";
+						cy.nodes().forEach(function(node){
+							var pos = node.position();
+							ctx.beginPath();
+							ctx.arc(pos.x,pos.y, 10, 0, 2 * Math.PI, false);
+							ctx.fill();
+						});
+						ctx.restore();
+
+						// Draw text that is fixed in the canvas
+						canvas.resetTransform();
+						ctx.save();
+						ctx.font="24px Helvetica";
+						ctx.fillStyle = "red";
+						ctx.fillText("This text is fixed", 200, 200);
+						ctx.restore();
+					});
+
+				};
+				// Preload images
+				background.src = "http://files.classcraft.com/classcraft-assets/images/event_scroll_middle.jpg";
 			});
 		</script>
 	</head>
