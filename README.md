@@ -1,6 +1,7 @@
 cytoscape-canvas
 ================================================================================
 
+![Preview](https://raw.githubusercontent.com/classcraft/cytoscape.js-canvas/master/preview.png)
 
 ## Description
 
