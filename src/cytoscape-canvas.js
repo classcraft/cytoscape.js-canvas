@@ -8,14 +8,10 @@
 		const cyCanvas = function (args) {
 			const cy = this;
 			const container = cy.container();
-			const $container = $(container);
 
 			const canvas = document.createElement("canvas");
-			const $canvas = $(canvas);
 
-			$container.append($canvas);
-
-			const ctx = $canvas[0].getContext("2d");
+			container.appendChild(canvas);
 
 			const defaults = {
 				zIndex: 1,
@@ -29,8 +25,8 @@
 			}
 
 			function resize() {
-				const width = $container.width();
-				const height = $container.height();
+				const width = container.offsetWidth;
+				const height = container.offsetHeight;
 
 				const canvasWidth = width * options.pixelRatio;
 				const canvasHeight = height * options.pixelRatio;
@@ -49,32 +45,10 @@
 			});
 
 			canvas.setAttribute("style", `position:absolute; top:0; left:0; z-index:${options.zIndex};`);
+
 			resize();
 
-			return {
-				ctx,
-				// Clear the canvas
-				clear() {
-					const width = cy.width();
-					const height = cy.height();
-					ctx.save();
-					ctx.setTransform(1, 0, 0, 1, 0, 0);
-					ctx.clearRect(0, 0, width * options.pixelRatio, height * options.pixelRatio);
-					ctx.restore();
-				},
-				// Reset the context transform to an identity matrix
-				resetTransform() {
-					ctx.setTransform(1, 0, 0, 1, 0, 0);
-				},
-				// Set the context transform to match Cystoscape's zoom & pan
-				setTransform() {
-					const pan = cy.pan();
-					const zoom = cy.zoom();
-					ctx.setTransform(1, 0, 0, 1, 0, 0);
-					ctx.translate(pan.x * options.pixelRatio, pan.y * options.pixelRatio);
-					ctx.scale(zoom * options.pixelRatio, zoom * options.pixelRatio);
-				},
-			};
+			return canvas;
 		};
 
 		cytoscape("core", "cyCanvas", cyCanvas);
