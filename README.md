@@ -8,6 +8,9 @@ cytoscape-canvas
 An extension to create a canvas over or under a Cytoscape graph.
 Useful for customizing nodes/edges, drawing backgrounds, etc.
 
+## Demo
+
+[Demo](https://codepen.io/anault/pen/dzdmKP)
 
 ## Dependencies
 
