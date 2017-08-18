@@ -59,7 +59,7 @@
 				const bottomLayer = cy.cyCanvas({
 					zIndex: -1,
 				});
-				const canvas = bottomLayer.canvas;
+				const canvas = bottomLayer.getCanvas();
 				const ctx = canvas.getContext("2d");
 
 				cy.on("render cyCanvas.resize", (evt) => {

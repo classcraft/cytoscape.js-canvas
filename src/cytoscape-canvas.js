@@ -49,7 +49,12 @@
 			resize();
 
 			return {
-				canvas,
+				/**
+				 * @return {Canvas} The generated canvas
+				 */
+				getCanvas() {
+					return canvas;
+				},
 				/**
 				 * Helper: Clear the canvas
 				 * @param {CanvasRenderingContext2D} ctx
