@@ -90,11 +90,11 @@ var layer = cy.cyCanvas({
 
 ### API
 
-### `layer.getCanvas()`
+#### `layer.getCanvas()`
 
 - return: *Canvas* The generated canvas
 
-### `layer.setTransform(ctx)`
+#### `layer.setTransform(ctx)`
 
 Set the context transform to **match Cystoscape's zoom & pan**. Further drawing will be on [model position](http://js.cytoscape.org/#notation/position).
 
