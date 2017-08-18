@@ -48,7 +48,39 @@
 
 			resize();
 
-			return canvas;
+			return {
+				canvas,
+				/**
+				 * Helper: Clear the canvas
+				 * @param {CanvasRenderingContext2D} ctx
+				 */
+				clear(ctx) {
+					const width = cy.width();
+					const height = cy.height();
+					ctx.save();
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
+					ctx.clearRect(0, 0, width * options.pixelRatio, height * options.pixelRatio);
+					ctx.restore();
+				},
+				/**
+				 * Helper: Reset the context transform to an identity matrix
+				 * @param {CanvasRenderingContext2D} ctx
+				 */
+				resetTransform(ctx) {
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
+				},
+				/**
+				 * Helper: Set the context transform to match Cystoscape's zoom & pan
+				 * @param {CanvasRenderingContext2D} ctx
+				 */
+				setTransform(ctx) {
+					const pan = cy.pan();
+					const zoom = cy.zoom();
+					ctx.setTransform(1, 0, 0, 1, 0, 0);
+					ctx.translate(pan.x * options.pixelRatio, pan.y * options.pixelRatio);
+					ctx.scale(zoom * options.pixelRatio, zoom * options.pixelRatio);
+				},
+			};
 		};
 
 		cytoscape("core", "cyCanvas", cyCanvas);
