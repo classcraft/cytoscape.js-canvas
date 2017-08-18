@@ -26,21 +26,23 @@ cyCanvas(cytoscape); // Register extension
 
 var cy = cytoscape({/* ... */});
 
-var canvas = cy.cyCanvas();
+var layer = cy.cyCanvas();
+var canvas = layer.getCanvas();
+var ctx = canvas.getContext('2d');
 
 cy.on("render cyCanvas.resize", function(evt) {
-	canvas.resetTransform();
-	canvas.clear();
+	layer.resetTransform(ctx);
+	layer.clear(ctx);
 
 	// Draw fixed elements
-	canvas.ctx.fillRect(0, 0, 100, 100); // Top left corner
+	ctx.fillRect(0, 0, 100, 100); // Top left corner
 
-	canvas.setTransform();
+	layer.setTransform(ctx);
 
 	// Draw model elements
 	cy.nodes().forEach(function(node) {
 		var pos = node.position();
-		canvas.ctx.fillRect(pos.x, pos.y, 100, 100); // At node position
+		ctx.fillRect(pos.x, pos.y, 100, 100); // At node position
 	});
 });
 
@@ -80,7 +82,7 @@ Plain HTML/JS has the extension registered for you automatically, because no `re
 ```js
 var cy = cytoscape({/* ... */});
 
-var canvas = cy.cyCanvas({
+var layer = cy.cyCanvas({
   zIndex: 1,
   pixelRatio: "auto",
 });
@@ -88,21 +90,27 @@ var canvas = cy.cyCanvas({
 
 ### API
 
-#### `canvas.ctx`
+### `layer.getCanvas()`
 
-Get the canvas context. You can then use any canvas functions (e.g. `canvas.ctx.fillRect(...)`)
+- return: *Canvas* The generated canvas
 
-#### `canvas.setTransform()`
+### `layer.setTransform(ctx)`
 
 Set the context transform to **match Cystoscape's zoom & pan**. Further drawing will be on [model position](http://js.cytoscape.org/#notation/position).
 
-#### `canvas.resetTransform()`
+- param: *CanvasRenderingContext2D* ctx
+
+#### `layer.resetTransform(ctx)`
 
 Reset the context transform. Further drawing will be on [rendered position](http://js.cytoscape.org/#notation/position).
 
-#### `canvas.clear()`
+- param: *CanvasRenderingContext2D* ctx
+
+#### `layer.clear(ctx)`
 
 Clear the entire canvas.
+
+- param: *CanvasRenderingContext2D* ctx
 
 ### Events
 
