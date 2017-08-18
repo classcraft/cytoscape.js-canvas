@@ -16,7 +16,7 @@ gulp.task('default', ['publish'], function( next ){
 });
 
 gulp.task('publish', [], function( next ){
-  runSequence('confver', 'lint', 'pkgver', 'push', 'tag', 'npm', next);
+  runSequence('confver', 'lint', 'build', 'pkgver', 'push', 'tag', 'npm', next);
 });
 
 gulp.task('confver', ['version'], function(){
@@ -67,6 +67,10 @@ gulp.task('push', shell.task([
 gulp.task('tag', shell.task([
   'git tag -a $VERSION -m "tagging v$VERSION"',
   'git push origin $VERSION'
+]));
+
+gulp.task('build', shell.task([
+  'npm run build'
 ]));
 
 gulp.task('npm', shell.task([
