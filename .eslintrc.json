@@ -2,7 +2,10 @@
 	"env": {
 		"browser": true
 	},
-	"extends": "eslint-config-classcraft",
+	"extends": [
+		"plugin:classcraft/recommended",
+		"eslint-config-classcraft"
+	],
 	"rules": {
 		"func-names": 0
 	},
