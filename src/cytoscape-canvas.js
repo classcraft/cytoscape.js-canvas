@@ -7,7 +7,7 @@
 
 		const cyCanvas = function(args) {
 			const cy = this;
-			const container = cy.container();
+			const container = cy.container().children[0];  // <div> element holding canvases
 
 			const canvas = document.createElement("canvas");
 
