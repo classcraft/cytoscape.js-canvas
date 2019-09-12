@@ -44,10 +44,16 @@
 				resize();
 			});
 
-			canvas.setAttribute(
-				"style",
-				`position:absolute; top:0; left:0; z-index:${options.zIndex};`,
-			);
+			var styleMap = {
+				'position': 'absolute',
+				'top': '0',
+				'left': '0',
+				'z-index': '${options.zIndex}',
+		    	};
+
+		    	Object.keys(styleMap).forEach((k) => {
+				canvas.style[k] = styleMap[k];
+		    	});
 
 			resize();
 
